@@ -36,7 +36,7 @@ class Dic < Thor
 	def ej(*word)
 		sentence = ""
 		word.each do |w|
-			sentence += w + "+"
+			sentence += "+" + w 
 		end
 		search(sentence, 'english', 'japanese', 'EJdict')
 	end
@@ -45,17 +45,14 @@ class Dic < Thor
 	option :je, :type => :string, :desc => 'your japanese sentence translation to english sentence by google api'
 	option :ej, :type => :string, :desc => 'your english sentence translation to japanese sentence by google api'
 	def trans(*word)
-		if word[0] == "ej"
-			sentence = ''
-			word.each_with_index do |w, i|
-                if i == 0
-                else
-				    sentence += w + "+" 
-                end
+		if options[:ej]
+			sentence = options[:ej]
+			word.each do |w|
+			    sentence += "+" + w  
 			end
 			trans_word(sentence, 'en', 'ja')
 		else
-			trans_word(word[1].to_s, 'ja', 'en')
+			trans_word(options[:je], 'ja', 'en')
 		end
 	end
 end
